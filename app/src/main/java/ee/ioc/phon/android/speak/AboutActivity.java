@@ -44,7 +44,7 @@ public class AboutActivity extends Activity {
         getActionBar().setSubtitle("v" + Utils.getVersionName(this));
 
         // Content
-        TextView tvAbout = (TextView) findViewById(R.id.tvAbout);
+        TextView tvAbout = findViewById(R.id.tvAbout);
         tvAbout.setMovementMethod(LinkMovementMethod.getInstance());
         String about = String.format(
                 getString(R.string.tvAbout),

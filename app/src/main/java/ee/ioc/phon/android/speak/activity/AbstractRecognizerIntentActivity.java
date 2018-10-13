@@ -158,7 +158,7 @@ public abstract class AbstractRecognizerIntentActivity extends Activity {
 
     protected void setUpSettingsButton() {
         // Short click opens the settings
-        ImageButton bSettings = (ImageButton) findViewById(R.id.bSettings);
+        ImageButton bSettings = findViewById(R.id.bSettings);
         if (bSettings != null) {
             bSettings.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -406,7 +406,7 @@ public abstract class AbstractRecognizerIntentActivity extends Activity {
             }
         }
 
-        intent.putStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS, getResultsAsArrayList(matches));
+        intent.putStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS, new ArrayList<>(matches));
         setResult(Activity.RESULT_OK, intent);
     }
 
@@ -509,7 +509,7 @@ public abstract class AbstractRecognizerIntentActivity extends Activity {
             // This is for Google Maps, YouTube, ...
             intent.putExtra(SearchManager.QUERY, match);
             // This is for SwiftKey X (from year 2011), ...
-            intent.putStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS, getResultsAsArrayList(matches));
+            intent.putStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS, new ArrayList<>(matches));
             String message;
             if (matches.size() == 1) {
                 message = match;
@@ -543,7 +543,7 @@ public abstract class AbstractRecognizerIntentActivity extends Activity {
         } else {
             Intent searchIntent = new Intent(this, DetailsActivity.class);
             searchIntent.putExtra(DetailsActivity.EXTRA_TITLE, getString(R.string.dialogTitleHypotheses));
-            searchIntent.putExtra(DetailsActivity.EXTRA_STRING_ARRAY, results.toArray(new String[results.size()]));
+            searchIntent.putExtra(DetailsActivity.EXTRA_STRING_ARRAY, results.toArray(new String[0]));
             startActivityForResult(searchIntent, ACTIVITY_REQUEST_CODE_DETAILS);
         }
     }
@@ -609,12 +609,6 @@ public abstract class AbstractRecognizerIntentActivity extends Activity {
         if (mIsStoreAudio) {
             mBufferList.add(buffer);
         }
-    }
-
-    private ArrayList<String> getResultsAsArrayList(List<String> results) {
-        ArrayList<String> resultsAsArrayList = new ArrayList<>();
-        resultsAsArrayList.addAll(results);
-        return resultsAsArrayList;
     }
 
     protected void sayVoicePrompt(final TtsProvider.Listener listener) {
